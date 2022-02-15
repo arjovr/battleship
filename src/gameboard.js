@@ -9,27 +9,27 @@ const cell = (ship, offset, missedShot = false) => {
 }
 
 const _board = {
-    placeShip(x, y, ship, isVertical = false) {
+    placeShip(x, y, ship, isHorizontal = false) {
         // the ships begins at top left and extends to bottom right.
         if (x < 0 || y < 0 || x >= this.length || y >= this.length) {
             throw RangeError('coordinates outside the board')
         }
 
-        if (!isVertical && x + ship.length > this.length) {
+        if (!isHorizontal && x + ship.length > this.length) {
             throw RangeError('ship overflows the board')
         }
 
-        if (isVertical && y + ship.length > this.length) {
+        if (isHorizontal && y + ship.length > this.length) {
             throw RangeError('ship overflows the board')
         }
 
         this.ships.push(ship)
 
-        const zero = isVertical ? y : x;
+        const zero = isHorizontal ? y : x;
 
         for (let i = zero; i < zero + ship.length; i++) {
-            const _x = isVertical ? x : i
-            const _y = isVertical ? i : y
+            const _x = isHorizontal ? x : i
+            const _y = isHorizontal ? i : y
             const currentCell = this.table[_x][_y]
             if (currentCell.ship) {
                 throw Error('there is a ship in the given coordinates')

@@ -1,7 +1,4 @@
-function getRandomInt(maxNumber) {
-    const max = Math.floor(maxNumber)
-    return Math.floor(Math.random() * (max + 1))
-}
+import * as random from './random'
 
 const _player = {
     attack(_x, _y) {
@@ -10,8 +7,8 @@ const _player = {
             return
         }
         while (true) {
-            const x = getRandomInt(this.enemyBoard.length - 1)
-            const y = getRandomInt(this.enemyBoard.length - 1)
+            const x = random.int(this.enemyBoard.length - 1)
+            const y = random.int(this.enemyBoard.length - 1)
             if (this.shoots[x][y]) {
                 continue
             }
