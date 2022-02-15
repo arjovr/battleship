@@ -25,6 +25,7 @@ img {
 body {
     height: 100vh;
     display: flex;
+    flex-direction: column;
 }
 
 main {
@@ -55,4 +56,18 @@ td {
 
 td.ship {
     background-color: red;
+}
+
+td.missed-shot {
+    background-color: cyan;
+}
+
+td.ship-hitted {
+    background-color: black;
+}
+
+div.messages {
+    font-size: 32px;
+    padding: 10px;
+    text-align: center;
 }

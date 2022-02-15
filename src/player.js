@@ -21,6 +21,7 @@ const _player = {
 
 const Player = function (isAI, gameboard, enemyBoard) {
     const player = Object.create(_player)
+    player.turn = false
     player.isAI = isAI
     player.gameboard = gameboard
     player.enemyBoard = enemyBoard

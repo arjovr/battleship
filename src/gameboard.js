@@ -1,10 +1,11 @@
 import * as ships from './ships'
 
-const cell = (ship, offset, missedShot = false) => {
+const cell = (ship, offset, missedShot = false, hitted = false) => {
     return {
         ship,
         offset,
-        missedShot
+        missedShot,
+        hitted
     }
 }
 
@@ -26,16 +27,29 @@ const _board = {
         this.ships.push(ship)
 
         const zero = isHorizontal ? y : x;
+        let fits = true;
 
         for (let i = zero; i < zero + ship.length; i++) {
             const _x = isHorizontal ? x : i
             const _y = isHorizontal ? i : y
             const currentCell = this.table[_x][_y]
             if (currentCell.ship) {
-                throw Error('there is a ship in the given coordinates')
+                fits = false
+                break
             } else {
                 this.table[_x][_y] = cell(ship, i - zero)
             }
+        }
+        if (!fits) {
+            for (let i = zero; i < zero + ship.length; i++) {
+                const _x = isHorizontal ? x : i
+                const _y = isHorizontal ? i : y
+                const currentCell = this.table[_x][_y]
+                if (currentCell.ship == ship) {
+                    this.table[_x][_y] = cell()
+                }
+            }
+            throw Error('there is a ship in the given coordinates')
         }
     },
     receiveAttack(x, y) {
@@ -45,6 +59,7 @@ const _board = {
         const cell = this.table[x][y]
         if (cell.ship) {
             cell.ship.hit(cell.offset)
+            cell.hitted = true
             return 'hit'
         }
         cell.missedShot = true
